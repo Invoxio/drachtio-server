@@ -206,7 +206,7 @@ namespace drachtio {
     	return m_mapTransactionId2IIP.end() != m_mapTransactionId2IIP.find( transactionId ) ;
     }
 
-		void logStorageCount(void)  ;
+		void logStorageCount(bool bDetail = false)  ;
 
 		/// IIP helpers 
 		void addIncomingInviteTransaction( nta_leg_t* leg, nta_incoming_t* irq, sip_t const *sip, const string& transactionId, std::shared_ptr<SipDialog> dlg ) ;
