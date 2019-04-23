@@ -1682,11 +1682,17 @@ namespace drachtio {
 
         assert( !(m_mapIrq2IIP.end() == itIrq && m_mapOrq2IIP.end() == itOrq )) ;
 
-        DR_LOG(log_debug) << "SipDialogController::clearIIPFinal:  clearing leg " << std::hex << leg  ;
+        DR_LOG(log_debug) << "SipDialogController::clearIIPFinal:  clearing leg " << std::hex << leg  << ", irq: " << irq << ", orq" << orq << ", rel" << rel;
 
         m_mapLeg2IIP.erase( it ) ;
-        if( itIrq != m_mapIrq2IIP.end() ) m_mapIrq2IIP.erase( itIrq ) ;
-        if( itOrq != m_mapOrq2IIP.end() ) m_mapOrq2IIP.erase( itOrq ) ;
+        if( itIrq != m_mapIrq2IIP.end() ) {
+            DR_LOG(log_debug) << "SipDialogController::clearIIPFinal:  clearing m_mapIrq2IIP for leg " << std::hex << leg ;
+            m_mapIrq2IIP.erase( itIrq ) ;
+        }
+        if( itOrq != m_mapOrq2IIP.end() ) {
+            DR_LOG(log_debug) << "SipDialogController::clearIIPFinal:  clearing m_mapOrq2IIP for leg " << std::hex << leg ;
+            m_mapOrq2IIP.erase( itOrq ) ;
+        }
         m_mapTransactionId2IIP.erase( itTransaction ) ;
 
         if( irq ) nta_incoming_destroy( irq ) ;
