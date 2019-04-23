@@ -1314,6 +1314,13 @@ namespace drachtio {
 
                     this->clearSipTimers(dlg);
 
+                    // if the call lasted < 32s we had a timerD waiting to do this
+                    mapLeg2IIP::iterator it = m_mapLeg2IIP.find( leg ) ;
+                    if (it != m_mapLeg2IIP.end()) {
+                        std::shared_ptr<IIP> iip = it->second;
+                        clearIIPFinal(iip, leg);
+                    }
+
                     //clear dialog when we send a 200 OK response to BYE
                     this->clearDialog( leg ) ;
                     if( !routed ) {
@@ -1660,7 +1667,7 @@ namespace drachtio {
 
         clearIIPFinal(iip, leg);
     }
-    void SipDialogController::clearIIPFinal(std::shared_ptr<IIP>  iip, nta_leg_t* leg) {
+    void SipDialogController::clearIIPFinal(std::shared_ptr<IIP> iip, nta_leg_t* leg) {
         mapLeg2IIP::iterator it = m_mapLeg2IIP.find( leg ) ;
         assert( it != m_mapLeg2IIP.end() ) ;
 
