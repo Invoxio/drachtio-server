@@ -1315,8 +1315,9 @@ namespace drachtio {
                     this->clearSipTimers(dlg);
 
                     // if the call lasted < 32s we had a timerD waiting to do this
-                    mapLeg2IIP::iterator it = m_mapLeg2IIP.find( leg ) ;
-                    if (it != m_mapLeg2IIP.end()) {
+                    string txnId = dlg->getTransactionId();
+                    mapTransactionId2IIP::const_iterator it = m_mapTransactionId2IIP.find(txnId);
+                    if (it != m_mapTransactionId2IIP.end()) {
                         std::shared_ptr<IIP> iip = it->second;
                         clearIIPFinal(iip, leg);
                     }
