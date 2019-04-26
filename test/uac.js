@@ -71,7 +71,7 @@ test('requested protocol not available', (t) => {
     });
 });
 
-test('retransmit OPTIONS', (t) => {
+test.skip('retransmit OPTIONS', (t) => {
   let uac;
   return start('./drachtio.conf4.xml', ['--memory-debug'])
     .then(() => {
@@ -102,7 +102,7 @@ test('retransmit OPTIONS', (t) => {
     });
 });
 
-test('retransmit INVITE', (t) => {
+test.skip('retransmit INVITE', (t) => {
   let uac;
   return start('./drachtio.conf4.xml', ['--memory-debug'])
     .then(() => {
