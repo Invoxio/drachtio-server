@@ -21,7 +21,7 @@ const execCmd = (cmd, opts) => {
 
 test('b2bua success', (t) => {
   let uas;
-  return start()
+  return start(null, ['--memory-debug'])
     .then(() => {
       uas = new Uas();
       return uas.connect();
@@ -55,9 +55,45 @@ test('b2bua success', (t) => {
     });
 });
 
+test('utf8 chars in Contact', (t) => {
+  let uas;
+  return start(null, ['--memory-debug'])
+    .then(() => {
+      uas = new Uas();
+      return uas.connect();
+    })
+    .then(() => {
+      return uas.b2b('127.0.0.1:5091');
+    })
+    .then(() => {
+      execCmd('sipp -sf ./uas-success.xml -i 127.0.0.1 -p 5091 -m 1', {cwd: './scenarios'});
+      return;
+    })
+    .then(() => {
+      return execCmd('sipp -sf ./uac-utf8.xml 127.0.0.1:5090 -m 1', {cwd: './scenarios'});
+    })
+    .then(() => {
+      t.pass('b2b succeeded');
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          uas.disconnect();
+          resolve();
+        }, 1000);
+      });
+    })
+    .then(() => {
+      return stop();
+    })
+    .catch((err) => {
+      t.fail(`failed with error ${err}`);
+      if (uas) uas.disconnect();
+      stop();
+    });
+});
+
 test('b2bua multiple provisional responses', (t) => {
   let uas;
-  return start()
+  return start(null, ['--memory-debug'])
     .then(() => {
       uas = new Uas();
       return uas.connect();
@@ -93,7 +129,7 @@ test('b2bua multiple provisional responses', (t) => {
 
 test('b2bua timer H', (t) => {
   let uas;
-  return start()
+  return start(null, ['--memory-debug'])
     .then(() => {
       uas = new Uas();
       return uas.connect();

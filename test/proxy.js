@@ -21,7 +21,7 @@ const execCmd = (cmd, opts) => {
 
 test('proxy failed invite', (t) => {
   let uas;
-  return start()
+  return start(null, ['--memory-debug'])
     .then(() => {
       uas = new Uas();
       return uas.connect();
@@ -57,7 +57,7 @@ test('proxy failed invite', (t) => {
 
 test('proxy call with Record-Route', (t) => {
   let uas;
-  return start()
+  return start(null, ['--memory-debug'])
     .then(() => {
       uas = new Uas();
       return uas.connect();
@@ -93,7 +93,7 @@ test('proxy call with Record-Route', (t) => {
 
 test('proxy call - remove preloaded Route header', (t) => {
   let uas;
-  return start()
+  return start(null, ['--memory-debug'])
     .then(() => {
       uas = new Uas();
       return uas.connect();
@@ -129,7 +129,7 @@ test('proxy call - remove preloaded Route header', (t) => {
 
 test('proxy call over tcp when transport=tcp appears in route', (t) => {
   let uas;
-  return start()
+  return start(null, ['--memory-debug'])
     .then(() => {
       uas = new Uas();
       return uas.connect();
@@ -165,7 +165,7 @@ test('proxy call over tcp when transport=tcp appears in route', (t) => {
 
 test('attempt to proxy over tcp when the server has no udp tport', (t) => {
   let uas;
-  return start('./drachtio.conf5.xml')
+  return start('./drachtio.conf5.xml', ['--memory-debug'])
     .then(() => {
       uas = new Uas();
       return uas.connect();
@@ -201,7 +201,7 @@ test('attempt to proxy over tcp when the server has no udp tport', (t) => {
 
 test('return 500 if call cannot be proxied due to lack of appropriate tport', (t) => {
   let uas;
-  return start('./drachtio.conf6.xml')
+  return start('./drachtio.conf6.xml', ['--memory-debug'])
     .then(() => {
       uas = new Uas();
       return uas.connect();
