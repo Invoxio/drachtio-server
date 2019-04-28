@@ -27,10 +27,10 @@ test('b2bua success', (t) => {
       return uas.connect();
     })
     .then(() => {
-      return uas.b2b('127.0.0.1:5091');
+      return uas.b2b('127.0.0.1:5093');
     })
     .then(() => {
-      execCmd('sipp -sf ./uas-success.xml -i 127.0.0.1 -p 5091 -m 1', {cwd: './scenarios'});
+      execCmd('sipp -sf ./uas-success.xml -i 127.0.0.1 -p 5093 -m 1', {cwd: './scenarios'});
       return;
     })
     .then(() => {
@@ -63,10 +63,10 @@ test('utf8 chars in Contact', (t) => {
       return uas.connect();
     })
     .then(() => {
-      return uas.b2b('127.0.0.1:5091');
+      return uas.b2b('127.0.0.1:5094');
     })
     .then(() => {
-      execCmd('sipp -sf ./uas-success.xml -i 127.0.0.1 -p 5091 -m 1', {cwd: './scenarios'});
+      execCmd('sipp -sf ./uas-success.xml -i 127.0.0.1 -p 5094 -m 1', {cwd: './scenarios'});
       return;
     })
     .then(() => {
@@ -99,10 +99,10 @@ test('b2bua multiple provisional responses', (t) => {
       return uas.connect();
     })
     .then(() => {
-      return uas.b2b('127.0.0.1:5091');
+      return uas.b2b('127.0.0.1:5095');
     })
     .then(() => {
-      execCmd('sipp -sf ./uas-183-180-200.xml -i 127.0.0.1 -p 5091 -m 1', {cwd: './scenarios'});
+      execCmd('sipp -sf ./uas-183-180-200.xml -i 127.0.0.1 -p 5095 -m 1', {cwd: './scenarios'});
       return;
     })
     .then(() => {

@@ -64,6 +64,8 @@ matrix:
           update: true
           packages:
             - libtool-bin
+    
+    - os: osx
 
 script: 
     - cd  ${TRAVIS_BUILD_DIR}/test

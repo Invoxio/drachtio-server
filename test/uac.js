@@ -110,11 +110,11 @@ test('retransmit INVITE', (t) => {
       return uac.connect();
     })
     .then(() => {
-      execCmd('sipp -sf ./uas-invite-delay.xml -i 127.0.0.1 -p 5091 -m 1', {cwd: './scenarios'});
+      execCmd('sipp -sf ./uas-invite-delay.xml -i 127.0.0.1 -p 5092 -m 1', {cwd: './scenarios'});
       return;
     })
     .then(() => {
-      return uac.invite('sip:127.0.0.1:5091');
+      return uac.invite('sip:127.0.0.1:5092');
     })
     .then((req) => {
       return new Promise((resolve) => {
