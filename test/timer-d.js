@@ -26,7 +26,7 @@ test('uac session < 32s', {timeout: 45000}, (t) => {
       return uac.connect();
     })
     .then(() => {
-      execCmd('sipp -sf ./uas-success.xml -i 127.0.0.1 -p 5095 -m 1', {cwd: './scenarios'});
+      execCmd('sipp -sf ./uas-success.xml -i 127.0.0.1 -p 5095 -m 1', {cwd: './scenarios', maxBuffer: 100 * 102 * 11024});
       return;
     })
     .then(() => {
@@ -64,7 +64,7 @@ test('uac session > 32s', {timeout: 55000}, (t) => {
       return uac.connect();
     })
     .then(() => {
-      execCmd('sipp -sf ./uas-success.xml -i 127.0.0.1 -p 5095 -m 1', {cwd: './scenarios'});
+      execCmd('sipp -sf ./uas-success.xml -i 127.0.0.1 -p 5095 -m 1', {cwd: './scenarios', maxBuffer: 100 * 102 * 11024});
       return;
     })
     .then(() => {
@@ -102,7 +102,7 @@ test('uac invite/reinvite', {timeout: 55000}, (t) => {
       return uac.connect();
     })
     .then(() => {
-      execCmd('sipp -sf ./uas-success-reinvite.xml -i 127.0.0.1 -p 5095 -m 1', {cwd: './scenarios'});
+      execCmd('sipp -sf ./uas-success-reinvite.xml -i 127.0.0.1 -p 5095 -m 1', {cwd: './scenarios', maxBuffer: 100 * 102 * 11024});
       return;
     })
     .then(() => {

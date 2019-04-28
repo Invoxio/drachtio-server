@@ -178,7 +178,7 @@ test('attempt to proxy over tcp when the server has no udp tport', (t) => {
       return;
     })
     .then(() => {
-      return execCmd('sipp -sf ./uac.xml 127.0.0.1:5090 -m 1 -t t1', {cwd: './scenarios'});
+      return execCmd('sipp -sf ./uac.xml 127.0.0.1:5090 -m 1 -t t1', {cwd: './scenarios', maxBuffer: 100 * 102 * 11024});
     })
     .then(() => {
       t.pass('proxy succeeded');
@@ -210,7 +210,7 @@ test('return 500 if call cannot be proxied due to lack of appropriate tport', (t
       return uas.proxy('sip:127.0.0.1:5095;transport=udp');
     })
     .then(() => {
-      return execCmd('sipp -sf ./uac-expect-500.xml 127.0.0.1:5090 -m 1 -t t1', {cwd: './scenarios'});
+      return execCmd('sipp -sf ./uac-expect-500.xml 127.0.0.1:5090 -m 1 -t t1', {cwd: './scenarios', maxBuffer: 100 * 102 * 11024});
     })
     .then(() => {
       t.pass('proxy succeeded');
