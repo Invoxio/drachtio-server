@@ -18,7 +18,7 @@ const execCmd = (cmd, opts) => {
   });
 };
 
-test.skip('uac session < 32s', {timeout: 45000}, (t) => {
+test('uac session < 32s', {timeout: 45000}, (t) => {
   let uac;
   return start('./drachtio.conf4.xml', ['--memory-debug'])
     .then(() => {
@@ -56,7 +56,7 @@ test.skip('uac session < 32s', {timeout: 45000}, (t) => {
     });
 });
 
-test.skip('uac session > 32s', {timeout: 55000}, (t) => {
+test('uac session > 32s', {timeout: 55000}, (t) => {
   let uac;
   return start('./drachtio.conf4.xml', ['--memory-debug'])
     .then(() => {
@@ -94,7 +94,7 @@ test.skip('uac session > 32s', {timeout: 55000}, (t) => {
     });
 });
 
-test.skip('uac invite/reinvite', {timeout: 55000}, (t) => {
+test('uac invite/reinvite', {timeout: 55000}, (t) => {
   let uac;
   return start('./drachtio.conf4.xml', ['--memory-debug'])
     .then(() => {
