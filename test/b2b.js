@@ -154,10 +154,10 @@ test('b2bua timer H', (t) => {
       return uas.connect();
     })
     .then(() => {
-      return uas.b2b('127.0.0.1:5091');
+      return uas.b2b('127.0.0.1:5095');
     })
     .then(() => {
-      execCmd('sipp -sf ./uas-cancel.xml -i 127.0.0.1 -p 5091 -m 1', {cwd: './scenarios'});
+      execCmd('sipp -sf ./uas-cancel.xml -i 127.0.0.1 -p 5095 -m 1', {cwd: './scenarios'});
       return;
     })
     .then(() => {

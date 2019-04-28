@@ -26,11 +26,11 @@ test('uac session < 32s', {timeout: 45000}, (t) => {
       return uac.connect();
     })
     .then(() => {
-      execCmd('sipp -sf ./uas-success.xml -i 127.0.0.1 -p 5091 -m 1', {cwd: './scenarios'});
+      execCmd('sipp -sf ./uas-success.xml -i 127.0.0.1 -p 5095 -m 1', {cwd: './scenarios'});
       return;
     })
     .then(() => {
-      return uac.call('sip:127.0.0.1:5091', {hangupAfter: 5000});
+      return uac.call('sip:127.0.0.1:5095', {hangupAfter: 5000});
     })
     .then((emitter) => {
       t.pass('sent call')
@@ -64,11 +64,11 @@ test('uac session > 32s', {timeout: 55000}, (t) => {
       return uac.connect();
     })
     .then(() => {
-      execCmd('sipp -sf ./uas-success.xml -i 127.0.0.1 -p 5091 -m 1', {cwd: './scenarios'});
+      execCmd('sipp -sf ./uas-success.xml -i 127.0.0.1 -p 5095 -m 1', {cwd: './scenarios'});
       return;
     })
     .then(() => {
-      return uac.call('sip:127.0.0.1:5091', {hangupAfter: 10000});
+      return uac.call('sip:127.0.0.1:5095', {hangupAfter: 10000});
     })
     .then((emitter) => {
       t.pass('sent call')
@@ -102,11 +102,11 @@ test('uac invite/reinvite', {timeout: 55000}, (t) => {
       return uac.connect();
     })
     .then(() => {
-      execCmd('sipp -sf ./uas-success-reinvite.xml -i 127.0.0.1 -p 5091 -m 1', {cwd: './scenarios'});
+      execCmd('sipp -sf ./uas-success-reinvite.xml -i 127.0.0.1 -p 5095 -m 1', {cwd: './scenarios'});
       return;
     })
     .then(() => {
-      return uac.call('sip:127.0.0.1:5091', {hangupAfter: 40000,  reinviteAfter: 5000});
+      return uac.call('sip:127.0.0.1:5095', {hangupAfter: 40000,  reinviteAfter: 5000});
     })
     .then((emitter) => {
       t.pass('sent call')
