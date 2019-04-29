@@ -88,7 +88,7 @@ before_install:
     - ./build.sh  --with-rtpstream --with-pcap 
     - sudo make install
     - sudo curl -sL https://deb.nodesource.com/setup_8.x | sudo bash -
-    - sudo apt-get install -y nodejs
+    - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get install -y nodejs; fi
     - curl-config --version
     - curl-config --libs 
     - cd $TRAVIS_BUILD_DIR
