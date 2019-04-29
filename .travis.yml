@@ -3,6 +3,8 @@ sudo: required
 
 matrix:
   include:
+    - os: osx
+
     - os: linux
       dist: trusty
       addons:
@@ -65,8 +67,6 @@ matrix:
           packages:
             - libtool-bin
     
-    - os: osx
-
 script: 
     - cd  ${TRAVIS_BUILD_DIR}/test
     - rm ./tls/dh1024.pem
@@ -82,7 +82,7 @@ git:
 before_install:
     - eval "${MATRIX_EVAL}"
     - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get install curl libz-dev ncurses-dev libpcap-dev libtool; else brew install curl ncurses libpcap libtool; fi 
-    - sudo chmod 0777 /usr/local/src 
+    - sudo mkdir -p /usr/local/src && sudo chmod 0777 /usr/local/src 
     - cd /usr/local/src
     - git clone https://github.com/SIPp/sipp.git && cd sipp && git checkout v3.5.1 
     - ./build.sh  --with-rtpstream --with-pcap 
