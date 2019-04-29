@@ -141,6 +141,7 @@ namespace drachtio {
         string requestUri ;
         string name ;
         string routeUri;
+        bool destroyOrq = false;
 
         DR_LOG(log_debug) << "SipDialogController::doSendRequestInsideDialog dialog id: " << pData->getDialogId()  ;
 
@@ -244,7 +245,8 @@ namespace drachtio {
                         TAG_IF( contentType.length(), SIPTAG_CONTENT_TYPE_STR(contentType.c_str())),
                         TAG_IF(forceTport, NTATAG_TPORT(tp)),
                         TAG_NEXT(tags) ) ;
-                    m_timerDHandler.addAck(orq);
+                    if (tport_is_dgram(nta_outgoing_transport( orq ))) m_timerDHandler.addAck(orq);
+                    else destroyOrq = true;
                     dlg->setTport( nta_outgoing_transport( orq ) ) ;
                     DR_LOG(log_debug) << "SipDialogController::doSendRequestInsideDialog - clearing IIP that we generated as uac" ;
                     this->clearIIP( leg ) ;     
@@ -338,8 +340,6 @@ namespace drachtio {
                 m_pController->getClientController()->route_api_response( pData->getClientMsgId(), "OK", data ) ; 
                 deleteTags( tags ) ;               
             }
-
- 
         } catch( std::runtime_error& err ) {
             DR_LOG(log_error) << "SipDialogController::doSendRequestInsideDialog - Error: " << err.what() ;
             string msg = string("Server error: ") + err.what() ;
@@ -349,6 +349,9 @@ namespace drachtio {
 
         /* we must explicitly delete an object allocated with placement new */
         pData->~SipMessageData() ;
+
+        if (orq && destroyOrq) nta_outgoing_destroy(orq);
+
     }
 
 //send request outside dialog
@@ -1328,7 +1331,10 @@ namespace drachtio {
             
             m_pController->getClientController()->route_response_inside_transaction( encodedMessage, meta, orq, sip, rip->getTransactionId(), rip->getDialogId() ) ;            
 
-            if (sip->sip_cseq->cs_method == sip_method_invite && 200 == sip->sip_status->st_status) {
+            tport_t *tp = nta_outgoing_transport(orq) ; 
+            if (sip->sip_cseq->cs_method == sip_method_invite && 
+                200 == sip->sip_status->st_status &&
+                tport_is_dgram(tp)) {
                 // start a timerD for this successful reINVITE
                 m_timerDHandler.addInvite(orq);
             }
@@ -1820,6 +1826,9 @@ namespace drachtio {
 
         // start timerD
         TimerEventHandle t = m_pTQM->addTimer("timerD", std::bind(&TimerDHandler::timerD, this, invite, callIdAndCSeq), NULL, TIMER_D_MSECS ) ;
+
+        DR_LOG(log_debug) << "TimerDHandler::addInvite " << hex << (void *)invite << ", " << callIdAndCSeq;
+
     }
 
     // ..then, when the app gives us the ACK to send out, call this to save for possible retransmits
@@ -1831,6 +1840,7 @@ namespace drachtio {
         if (m_mapCallIdAndCSeq2Invite.end() != it) {
             m_mapInvite2Ack.insert(mapInvite2Ack::value_type(it->second, ack));
             m_mapCallIdAndCSeq2Invite.erase(it);
+            DR_LOG(log_debug) << "TimerDHandler::addAck " << hex << (void *)ack << ", " << callIdAndCSeq;
         }
         else {
             DR_LOG(log_error) << "TimerDHandler::addAck - failed to find outbound invite we sent for callid " << nta_outgoing_call_id(ack);
