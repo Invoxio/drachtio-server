@@ -73,8 +73,8 @@ script:
     - openssl dhparam -out ./tls/dh1024.pem 1024
     - cat package.json
     - npm install
-    - npm test
-    - cat /tmp/drachtio.log
+    - if [ $TRAVIS_OS_NAME = linux ]; then npm test; fi
+    - if [ $TRAVIS_OS_NAME = linux ]; then cat /tmp/drachtio.log; fi
 
 git:
     submodules: false
