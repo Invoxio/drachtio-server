@@ -121,7 +121,7 @@ namespace drachtio {
 		m_bInviteDialog(sip->sip_request->rq_method == sip_method_invite), m_bAlerting(false),
 		m_timeArrive(std::chrono::steady_clock::now())
 	{
-		m_dialogId = dialogId ;
+		//m_dialogId = dialogId ;
 		m_transactionId = transactionId ;
 
 		if( sip->sip_call_id->i_id ) m_strCallId = sip->sip_call_id->i_id ;
